@@ -74,13 +74,13 @@ module.exports = hisoka = async (hisoka, m, chatUpdate, store) => {
   try {
     var body =
       m.mtype === 'conversation'
-        ? m.message.conversation.startsWith(prefix)
+        ? m.message.conversation
         : m.mtype == 'imageMessage'
-        ? m.message.imageMessage.caption.startsWith(prefix)
+        ? m.message.imageMessage.caption
         : m.mtype == 'videoMessage'
-        ? m.message.videoMessage.caption.startsWith(prefix)
+        ? m.message.videoMessage.caption
         : m.mtype == 'extendedTextMessage'
-        ? m.message.extendedTextMessage.text.startsWith(prefix)
+        ? m.message.extendedTextMessage.text
         : m.mtype == 'buttonsResponseMessage'
         ? m.message.buttonsResponseMessage.selectedButtonId
         : m.mtype == 'listResponseMessage'
@@ -92,9 +92,12 @@ module.exports = hisoka = async (hisoka, m, chatUpdate, store) => {
           m.message.listResponseMessage?.singleSelectReply.selectedRowId ||
           m.text
         : '';
-
     var budy = typeof m.text == 'string' ? m.text : '';
-    var prefix = '.';
+    var prefix = prefa
+      ? /^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#$%^&.©^]/gi.test(body)
+        ? body.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#$%^&.©^]/gi)[0]
+        : ''
+      : prefa ?? global.prefix;
     const isCmd = body.startsWith(prefix);
     const command = body
       .replace(prefix, '')
@@ -696,11 +699,7 @@ Selama ${clockString(new Date() - user.afkTime)}
     }
 
     switch (command) {
-      case prefix + 'setprefix':
-        prefix = q;
-        m.reply(`Succes Mengganti Prefix : ${q}`);
-        break;
-      case prefix + 'afk':
+      case 'afk':
         {
           let user = global.db.users[m.sender];
           user.afkTime = +new Date();
@@ -708,9 +707,9 @@ Selama ${clockString(new Date() - user.afkTime)}
           m.reply(`${m.pushName} Telah Afk${text ? ': ' + text : ''}`);
         }
         break;
-      case prefix + 'ttc':
-      case prefix + 'ttt':
-      case prefix + 'tictactoe':
+      case 'ttc':
+      case 'ttt':
+      case 'tictactoe':
         {
           let TicTacToe = require('./lib/tictactoe');
           this.game = this.game ? this.game : {};
@@ -781,8 +780,8 @@ Ketik *nyerah* untuk menyerah dan mengakui kekalahan`;
           }
         }
         break;
-      case prefix + 'delttc':
-      case prefix + 'delttt':
+      case 'delttc':
+      case 'delttt':
         {
           this.game = this.game ? this.game : {};
           try {
@@ -797,8 +796,8 @@ Ketik *nyerah* untuk menyerah dan mengakui kekalahan`;
           }
         }
         break;
-      case prefix + 'suitpvp':
-      case prefix + 'suit':
+      case 'suitpvp':
+      case 'suit':
         {
           this.suit = this.suit ? this.suit : {};
           let poin = 10;
@@ -855,11 +854,11 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
           };
         }
         break;
-      case prefix + 'donasi':
-      case prefix + 'sewabot':
-      case prefix + 'sewa':
-      case prefix + 'buypremium':
-      case prefix + 'donate':
+      case 'donasi':
+      case 'sewabot':
+      case 'sewa':
+      case 'buypremium':
+      case 'donate':
         {
           hisoka.sendMessage(
             m.chat,
@@ -873,14 +872,14 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
           );
         }
         break;
-      case prefix + 'sc':
+      case 'sc':
         {
           m.reply(
             'Script : https://github.com/DikaArdnt/Hisoka-Morou\n\n Dont Forget Give Star\n\nDonate : 6281615075793 (Link Aja)\nSaweria : https://saweria.co/DikaArdnt\nPaypal : https://www.paypal.me/Cakhaho\n\n Dont Forget Donate'
           );
         }
         break;
-      case prefix + 'chat':
+      case 'chat':
         {
           if (!isCreator) throw mess.owner;
           if (!q)
@@ -927,7 +926,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
           }
         }
         break;
-      case prefix + 'family100':
+      case 'family100':
         {
           if ('family100' + m.chat in _family100) {
             m.reply('Masih Ada Sesi Yang Belum Diselesaikan!');
@@ -953,11 +952,11 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
           };
         }
         break;
-      case prefix + 'halah':
-      case prefix + 'hilih':
-      case prefix + 'huluh':
-      case prefix + 'heleh':
-      case prefix + 'holoh':
+      case 'halah':
+      case 'hilih':
+      case 'huluh':
+      case 'heleh':
+      case 'holoh':
         if (!m.quoted && !text)
           throw `Kirim/reply text dengan caption ${prefix + command}`;
         ter = command[1].toLowerCase();
@@ -974,7 +973,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
           tex.replace(/[aiueo]/g, ter).replace(/[AIUEO]/g, ter.toUpperCase())
         );
         break;
-      case prefix + 'tebak':
+      case 'tebak':
         {
           if (!text)
             throw `Example : ${
@@ -1215,8 +1214,8 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
           }
         }
         break;
-      case prefix + 'kuismath':
-      case prefix + 'math':
+      case 'kuismath':
+      case 'math':
         {
           if (kuismath.hasOwnProperty(m.sender.split('@')[0]))
             throw 'Masih Ada Sesi Yang Belum Diselesaikan!';
@@ -1247,7 +1246,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
           }
         }
         break;
-      case prefix + 'jodohku':
+      case 'jodohku':
         {
           if (!m.isGroup) throw mess.group;
           let member = participants.map((u) => u.id);
@@ -1274,7 +1273,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
           );
         }
         break;
-      case prefix + 'jadian':
+      case 'jadian':
         {
           if (!m.isGroup) throw mess.group;
           let member = participants.map((u) => u.id);
@@ -1301,7 +1300,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
           );
         }
         break;
-      case prefix + 'join':
+      case 'join':
         {
           if (!isCreator) throw mess.owner;
           if (!text) throw 'Masukkan Link Group!';
@@ -1315,7 +1314,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
             .catch((err) => m.reply(jsonformat(err)));
         }
         break;
-      case prefix + 'leave':
+      case 'leave':
         {
           if (!isCreator) throw mess.owner;
           await hisoka
@@ -1324,7 +1323,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
             .catch((err) => m.reply(jsonformat(err)));
         }
         break;
-      case prefix + 'kick':
+      case 'kick':
         {
           if (!m.isGroup) throw mess.group;
           if (!isBotAdmins) throw mess.botAdmin;
@@ -1340,7 +1339,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
             .catch((err) => m.reply(jsonformat(err)));
         }
         break;
-      case prefix + 'add':
+      case 'add':
         {
           if (!m.isGroup) throw mess.group;
           if (!isBotAdmins) throw mess.botAdmin;
@@ -1354,7 +1353,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
             .catch((err) => m.reply(jsonformat(err)));
         }
         break;
-      case prefix + 'promote':
+      case 'promote':
         {
           if (!m.isGroup) throw mess.group;
           if (!isBotAdmins) throw mess.botAdmin;
@@ -1370,7 +1369,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
             .catch((err) => m.reply(jsonformat(err)));
         }
         break;
-      case prefix + 'demote':
+      case 'demote':
         {
           if (!m.isGroup) throw mess.group;
           if (!isBotAdmins) throw mess.botAdmin;
@@ -1386,7 +1385,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
             .catch((err) => m.reply(jsonformat(err)));
         }
         break;
-      case prefix + 'block':
+      case 'block':
         {
           if (!isCreator) throw mess.owner;
           let users = m.mentionedJid[0]
@@ -1400,7 +1399,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
             .catch((err) => m.reply(jsonformat(err)));
         }
         break;
-      case prefix + 'unblock':
+      case 'unblock':
         {
           if (!isCreator) throw mess.owner;
           let users = m.mentionedJid[0]
@@ -1414,8 +1413,8 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
             .catch((err) => m.reply(jsonformat(err)));
         }
         break;
-      case prefix + 'setname':
-      case prefix + 'setsubject':
+      case 'setname':
+      case 'setsubject':
         {
           if (!m.isGroup) throw mess.group;
           if (!isBotAdmins) throw mess.botAdmin;
@@ -1427,8 +1426,8 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
             .catch((err) => m.reply(jsonformat(err)));
         }
         break;
-      case prefix + 'setdesc':
-      case prefix + 'setdesk':
+      case 'setdesc':
+      case 'setdesk':
         {
           if (!m.isGroup) throw mess.group;
           if (!isBotAdmins) throw mess.botAdmin;
@@ -1440,7 +1439,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
             .catch((err) => m.reply(jsonformat(err)));
         }
         break;
-      case prefix + 'setppbot':
+      case 'setppbot':
         {
           if (!isCreator) throw mess.owner;
           if (!quoted)
@@ -1456,9 +1455,9 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
           m.reply(mess.success);
         }
         break;
-      case prefix + 'setppgroup':
-      case prefix + 'setppgrup':
-      case prefix + 'setppgc':
+      case 'setppgroup':
+      case 'setppgrup':
+      case 'setppgc':
         {
           if (!m.isGroup) throw mess.group;
           if (!isAdmins) throw mess.admin;
@@ -1475,7 +1474,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
           m.reply(mess.success);
         }
         break;
-      case prefix + 'tagall':
+      case 'tagall':
         {
           if (!m.isGroup) throw mess.group;
           if (!isBotAdmins) throw mess.botAdmin;
@@ -1493,7 +1492,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
           );
         }
         break;
-      case prefix + 'hidetag':
+      case 'hidetag':
         {
           if (!m.isGroup) throw mess.group;
           if (!isBotAdmins) throw mess.botAdmin;
@@ -1505,8 +1504,8 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
           );
         }
         break;
-      case prefix + 'style':
-      case prefix + 'styletext':
+      case 'style':
+      case 'styletext':
         {
           if (!isPremium && global.db.users[m.sender].limit < 1)
             return m.reply(mess.endLimit); // respon ketika limit habis
@@ -1521,7 +1520,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
           m.reply(teks);
         }
         break;
-      case prefix + 'vote':
+      case 'vote':
         {
           if (!m.isGroup) throw mess.group;
           if (m.chat in vote)
@@ -1578,7 +1577,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
           hisoka.sendMessage(m.chat, buttonMessageVote);
         }
         break;
-      case prefix + 'upvote':
+      case 'upvote':
         {
           if (!m.isGroup) throw mess.group;
           if (!(m.chat in vote))
@@ -1630,7 +1629,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           hisoka.sendMessage(m.chat, buttonMessageUpvote);
         }
         break;
-      case prefix + 'devote':
+      case 'devote':
         {
           if (!m.isGroup) throw mess.group;
           if (!(m.chat in vote))
@@ -1683,7 +1682,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
         }
         break;
 
-      case prefix + 'cekvote':
+      case 'cekvote':
         if (!m.isGroup) throw mess.group;
         if (!(m.chat in vote))
           throw `_*tidak ada voting digrup ini!*_\n\n*${prefix}vote* - untuk memulai vote`;
@@ -1712,9 +1711,9 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
 `;
         hisoka.sendTextWithMentions(m.chat, teks_vote, m);
         break;
-      case prefix + 'deletevote':
-      case prefix + 'delvote':
-      case prefix + 'hapusvote':
+      case 'deletevote':
+      case 'delvote':
+      case 'hapusvote':
         {
           if (!m.isGroup) throw mess.group;
           if (!(m.chat in vote))
@@ -1723,8 +1722,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           m.reply('Berhasil Menghapus Sesi Vote Di Grup Ini');
         }
         break;
-      case prefix + 'group':
-      case prefix + 'grup':
+      case 'group':
+      case 'grup':
         {
           if (!m.isGroup) throw mess.group;
           if (!isBotAdmins) throw mess.botAdmin;
@@ -1762,7 +1761,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           }
         }
         break;
-      case prefix + 'editinfo':
+      case 'editinfo':
         {
           if (!m.isGroup) throw mess.group;
           if (!isBotAdmins) throw mess.botAdmin;
@@ -1800,8 +1799,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           }
         }
         break;
-      case prefix + 'linkgroup':
-      case prefix + 'linkgc':
+      case 'linkgroup':
+      case 'linkgc':
         {
           if (!m.isGroup) throw mess.group;
           let response = await hisoka.groupInviteCode(m.chat);
@@ -1813,7 +1812,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'ephemeral':
+      case 'ephemeral':
         {
           if (!m.isGroup) throw mess.group;
           if (!isBotAdmins) throw mess.botAdmin;
@@ -1834,8 +1833,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           }
         }
         break;
-      case prefix + 'delete':
-      case prefix + 'del':
+      case 'delete':
+      case 'del':
         {
           if (!m.quoted) throw false;
           let { chat, fromMe, id, isBaileys } = m.quoted;
@@ -1850,8 +1849,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           });
         }
         break;
-      case prefix + 'bcgc':
-      case prefix + 'bcgroup':
+      case 'bcgc':
+      case 'bcgroup':
         {
           if (!isCreator) throw mess.owner;
           if (!text)
@@ -1907,9 +1906,9 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           m.reply(`Sukses Mengirim Broadcast Ke ${anu.length} Group`);
         }
         break;
-      case prefix + 'bc':
-      case prefix + 'broadcast':
-      case prefix + 'bcall':
+      case 'bc':
+      case 'broadcast':
+      case 'bcall':
         {
           if (!isCreator) throw mess.owner;
           if (!text)
@@ -1961,7 +1960,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           m.reply('Sukses Broadcast');
         }
         break;
-      case prefix + 'infochat':
+      case 'infochat':
         {
           if (!m.quoted) m.reply('Reply Pesan');
           let msg = await m.getQuotedObj();
@@ -1980,8 +1979,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           hisoka.sendTextWithMentions(m.chat, teks, m);
         }
         break;
-      case prefix + 'q':
-      case prefix + 'quoted':
+      case 'q':
+      case 'quoted':
         {
           if (!m.quoted) return m.reply('Reply Pesannya!!');
           let wokwol = await hisoka.serializeM(await m.getQuotedObj());
@@ -1990,7 +1989,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           await wokwol.quoted.copyNForward(m.chat, true);
         }
         break;
-      case prefix + 'listpc':
+      case 'listpc':
         {
           let anu = await store.chats
             .all()
@@ -2008,7 +2007,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           hisoka.sendTextWithMentions(m.chat, teks, m);
         }
         break;
-      case prefix + 'listgc':
+      case 'listgc':
         {
           let anu = await store.chats
             .all()
@@ -2030,8 +2029,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           hisoka.sendTextWithMentions(m.chat, teks, m);
         }
         break;
-      case prefix + 'listonline':
-      case prefix + 'liston':
+      case 'listonline':
+      case 'liston':
         {
           let id = args && /\d+\-\d+@g.us/.test(args[0]) ? args[0] : m.chat;
           let online = [...Object.keys(store.presences[id]), botNumber];
@@ -2044,10 +2043,10 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'sticker':
-      case prefix + 's':
-      case prefix + 'stickergif':
-      case prefix + 'sgif':
+      case 'sticker':
+      case 's':
+      case 'stickergif':
+      case 'sgif':
         {
           if (!quoted)
             throw `Balas Video/Image Dengan Caption ${prefix + command}`;
@@ -2075,7 +2074,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           }
         }
         break;
-      case prefix + 'ebinary':
+      case 'ebinary':
         {
           if (!m.quoted.text && !text)
             throw `Kirim/reply text dengan caption ${prefix + command}`;
@@ -2089,7 +2088,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           m.reply(eb);
         }
         break;
-      case prefix + 'dbinary':
+      case 'dbinary':
         {
           if (!m.quoted.text && !text)
             throw `Kirim/reply text dengan caption ${prefix + command}`;
@@ -2103,7 +2102,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           m.reply(db);
         }
         break;
-      case prefix + 'emojimix':
+      case 'emojimix':
         {
           if (!text) throw `Example : ${prefix + command} 😅+🤔`;
           let [emoji1, emoji2] = text.split`+`;
@@ -2122,8 +2121,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           }
         }
         break;
-      case prefix + 'toimage':
-      case prefix + 'toimg':
+      case 'toimage':
+      case 'toimg':
         {
           if (!quoted) throw 'Reply Image';
           if (!/webp/.test(mime))
@@ -2140,8 +2139,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           });
         }
         break;
-      case prefix + 'tomp4':
-      case prefix + 'tovideo':
+      case 'tomp4':
+      case 'tovideo':
         {
           if (!quoted) throw 'Reply Image';
           if (!/webp/.test(mime))
@@ -2163,8 +2162,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           await fs.unlinkSync(media);
         }
         break;
-      case prefix + 'toaud':
-      case prefix + 'toaudio':
+      case 'toaud':
+      case 'toaudio':
         {
           if (!/video/.test(mime) && !/audio/.test(mime))
             throw `Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${
@@ -2185,7 +2184,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'tomp3':
+      case 'tomp3':
         {
           if (/document/.test(mime))
             throw `Kirim/Reply Video/Audio Yang Ingin Dijadikan MP3 Dengan Caption ${
@@ -2214,8 +2213,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'tovn':
-      case prefix + 'toptt':
+      case 'tovn':
+      case 'toptt':
         {
           if (!/video/.test(mime) && !/audio/.test(mime))
             throw `Reply Video/Audio Yang Ingin Dijadikan VN Dengan Caption ${
@@ -2236,7 +2235,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'togif':
+      case 'togif':
         {
           if (!quoted) throw 'Reply Image';
           if (!/webp/.test(mime))
@@ -2259,7 +2258,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           await fs.unlinkSync(media);
         }
         break;
-      case prefix + 'tourl':
+      case 'tourl':
         {
           m.reply(mess.wait);
           let {
@@ -2278,9 +2277,9 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           await fs.unlinkSync(media);
         }
         break;
-      case prefix + 'imagenobg':
-      case prefix + 'removebg':
-      case prefix + 'remove-bg':
+      case 'imagenobg':
+      case 'removebg':
+      case 'remove-bg':
         {
           if (!quoted)
             throw `Kirim/Reply Image Dengan Caption ${prefix + command}`;
@@ -2325,8 +2324,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
             });
         }
         break;
-      case prefix + 'yts':
-      case prefix + 'ytsearch':
+      case 'yts':
+      case 'ytsearch':
         {
           if (!text) throw `Example : ${prefix + command} story wa anime`;
           let yts = require('yt-search');
@@ -2349,7 +2348,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'google':
+      case 'google':
         {
           if (!text) throw `Example : ${prefix + command} fatih arridho`;
           let google = require('google-it');
@@ -2364,7 +2363,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           });
         }
         break;
-      case prefix + 'gimage':
+      case 'gimage':
         {
           if (!text) throw `Example : ${prefix + command} kaori cicak`;
           let gis = require('g-i-s');
@@ -2391,8 +2390,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           });
         }
         break;
-      case prefix + 'play':
-      case prefix + 'ytplay':
+      case 'play':
+      case 'ytplay':
         {
           if (!text) throw `Example : ${prefix + command} story wa anime`;
           let yts = require('yt-search');
@@ -2431,8 +2430,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           hisoka.sendMessage(m.chat, buttonMessage, { quoted: m });
         }
         break;
-      case prefix + 'ytmp3':
-      case prefix + 'ytaudio':
+      case 'ytmp3':
+      case 'ytaudio':
         {
           let { yta } = require('./lib/y2mate');
           if (!text)
@@ -2464,8 +2463,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'ytmp4':
-      case prefix + 'ytvideo':
+      case 'ytmp4':
+      case 'ytvideo':
         {
           let { ytv } = require('./lib/y2mate');
           if (!text)
@@ -2492,7 +2491,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'getmusic':
+      case 'getmusic':
         {
           let { yta } = require('./lib/y2mate');
           if (!text) throw `Example : ${prefix + command} 1`;
@@ -2531,7 +2530,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'getvideo':
+      case 'getvideo':
         {
           let { ytv } = require('./lib/y2mate');
           if (!text) throw `Example : ${prefix + command} 1`;
@@ -2565,7 +2564,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'pinterest':
+      case 'pinterest':
         {
           m.reply(mess.wait);
           let { pinterest } = require('./lib/scraper');
@@ -2578,12 +2577,12 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'anime':
-      case prefix + 'waifu':
-      case prefix + 'husbu':
-      case prefix + 'neko':
-      case prefix + 'shinobu':
-      case prefix + 'megumin':
+      case 'anime':
+      case 'waifu':
+      case 'husbu':
+      case 'neko':
+      case 'shinobu':
+      case 'megumin':
         {
           m.reply(mess.wait);
           hisoka.sendMessage(
@@ -2598,7 +2597,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'couple':
+      case 'couple':
         {
           m.reply(mess.wait);
           let anu = await fetchJson(
@@ -2617,8 +2616,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'coffe':
-      case prefix + 'kopi':
+      case 'coffe':
+      case 'kopi':
         {
           let buttons = [
             {
@@ -2637,7 +2636,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           hisoka.sendMessage(m.chat, buttonMessage, { quoted: m });
         }
         break;
-      case prefix + 'wallpaper':
+      case 'wallpaper':
         {
           if (!text) throw 'Masukkan Query Title';
           let { wallpaper } = require('./lib/scraper');
@@ -2664,7 +2663,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           hisoka.sendMessage(m.chat, buttonMessage, { quoted: m });
         }
         break;
-      case prefix + 'wikimedia':
+      case 'wikimedia':
         {
           if (!text) throw 'Masukkan Query Title';
           let { wikimedia } = require('./lib/scraper');
@@ -2687,8 +2686,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           hisoka.sendMessage(m.chat, buttonMessage, { quoted: m });
         }
         break;
-      case prefix + 'quotesanime':
-      case prefix + 'quoteanime':
+      case 'quotesanime':
+      case 'quoteanime':
         {
           let { quotesAnime } = require('./lib/scraper');
           let anu = await quotesAnime();
@@ -2709,11 +2708,11 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           hisoka.sendMessage(m.chat, buttonMessage, { quoted: m });
         }
         break;
-      case prefix + 'motivasi':
-      case prefix + 'dilanquote':
-      case prefix + 'bucinquote':
-      case prefix + 'katasenja':
-      case prefix + 'puisi':
+      case 'motivasi':
+      case 'dilanquote':
+      case 'bucinquote':
+      case 'katasenja':
+      case 'puisi':
         {
           let anu = await fetchJson(
             api('zenz', '/api/' + command, {}, 'apikey')
@@ -2734,37 +2733,37 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           hisoka.sendMessage(m.chat, buttonMessage, { quoted: m });
         }
         break;
-      case prefix + '3dchristmas':
-      case prefix + '3ddeepsea':
-      case prefix + 'americanflag':
-      case prefix + '3dscifi':
-      case prefix + '3drainbow':
-      case prefix + '3dwaterpipe':
-      case prefix + 'halloweenskeleton':
-      case prefix + 'sketch':
-      case prefix + 'bluecircuit':
-      case prefix + 'space':
-      case prefix + 'metallic':
-      case prefix + 'fiction':
-      case prefix + 'greenhorror':
-      case prefix + 'transformer':
-      case prefix + 'berry':
-      case prefix + 'thunder':
-      case prefix + 'magma':
-      case prefix + '3dcrackedstone':
-      case prefix + '3dneonlight':
-      case prefix + 'impressiveglitch':
-      case prefix + 'naturalleaves':
-      case prefix + 'fireworksparkle':
-      case prefix + 'matrix':
-      case prefix + 'dropwater':
-      case prefix + 'harrypotter':
-      case prefix + 'foggywindow':
-      case prefix + 'neondevils':
-      case prefix + 'christmasholiday':
-      case prefix + '3dgradient':
-      case prefix + 'blackpink':
-      case prefix + 'gluetext':
+      case '3dchristmas':
+      case '3ddeepsea':
+      case 'americanflag':
+      case '3dscifi':
+      case '3drainbow':
+      case '3dwaterpipe':
+      case 'halloweenskeleton':
+      case 'sketch':
+      case 'bluecircuit':
+      case 'space':
+      case 'metallic':
+      case 'fiction':
+      case 'greenhorror':
+      case 'transformer':
+      case 'berry':
+      case 'thunder':
+      case 'magma':
+      case '3dcrackedstone':
+      case '3dneonlight':
+      case 'impressiveglitch':
+      case 'naturalleaves':
+      case 'fireworksparkle':
+      case 'matrix':
+      case 'dropwater':
+      case 'harrypotter':
+      case 'foggywindow':
+      case 'neondevils':
+      case 'christmasholiday':
+      case '3dgradient':
+      case 'blackpink':
+      case 'gluetext':
         {
           if (!text) throw `Example : ${prefix + command} text`;
           m.reply(mess.wait);
@@ -2785,18 +2784,18 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'shadow':
-      case prefix + 'romantic':
-      case prefix + 'smoke':
-      case prefix + 'burnpapper':
-      case prefix + 'naruto':
-      case prefix + 'lovemsg':
-      case prefix + 'grassmsg':
-      case prefix + 'lovetext':
-      case prefix + 'coffecup':
-      case prefix + 'butterfly':
-      case prefix + 'harrypotter':
-      case prefix + 'retrolol':
+      case 'shadow':
+      case 'romantic':
+      case 'smoke':
+      case 'burnpapper':
+      case 'naruto':
+      case 'lovemsg':
+      case 'grassmsg':
+      case 'lovetext':
+      case 'coffecup':
+      case 'butterfly':
+      case 'harrypotter':
+      case 'retrolol':
         {
           if (!text) throw 'No Query Text';
           m.reply(mess.wait);
@@ -2817,15 +2816,15 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'ffcover':
-      case prefix + 'crossfire':
-      case prefix + 'galaxy':
-      case prefix + 'glass':
-      case prefix + 'neon':
-      case prefix + 'beach':
-      case prefix + 'blackpink':
-      case prefix + 'igcertificate':
-      case prefix + 'ytcertificate':
+      case 'ffcover':
+      case 'crossfire':
+      case 'galaxy':
+      case 'glass':
+      case 'neon':
+      case 'beach':
+      case 'blackpink':
+      case 'igcertificate':
+      case 'ytcertificate':
         {
           if (!text) throw 'No Query Text';
           m.reply(mess.wait);
@@ -2846,8 +2845,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'nomerhoki':
-      case prefix + 'nomorhoki':
+      case 'nomerhoki':
+      case 'nomorhoki':
         {
           if (!Number(text))
             throw `Example : ${prefix + command} 6288292024190`;
@@ -2860,8 +2859,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'artimimpi':
-      case prefix + 'tafsirmimpi':
+      case 'artimimpi':
+      case 'tafsirmimpi':
         {
           if (!text) throw `Example : ${prefix + command} belanja`;
           let anu = await primbon.tafsir_mimpi(text);
@@ -2873,8 +2872,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'ramalanjodoh':
-      case prefix + 'ramaljodoh':
+      case 'ramalanjodoh':
+      case 'ramaljodoh':
         {
           if (!text)
             throw `Example : ${
@@ -2908,8 +2907,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'ramalanjodohbali':
-      case prefix + 'ramaljodohbali':
+      case 'ramalanjodohbali':
+      case 'ramaljodohbali':
         {
           if (!text)
             throw `Example : ${
@@ -2943,7 +2942,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'suamiistri':
+      case 'suamiistri':
         {
           if (!text)
             throw `Example : ${
@@ -2977,8 +2976,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'ramalancinta':
-      case prefix + 'ramalcinta':
+      case 'ramalancinta':
+      case 'ramalcinta':
         {
           if (!text)
             throw `Example : ${
@@ -3012,7 +3011,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'artinama':
+      case 'artinama':
         {
           if (!text) throw `Example : ${prefix + command} Dika Ardianta`;
           let anu = await primbon.arti_nama(text);
@@ -3024,8 +3023,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'kecocokannama':
-      case prefix + 'cocoknama':
+      case 'kecocokannama':
+      case 'cocoknama':
         {
           if (!text) throw `Example : ${prefix + command} Dika, 7, 7, 2005`;
           let [nama, tgl, bln, thn] = text.split`,`;
@@ -3038,9 +3037,9 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'kecocokanpasangan':
-      case prefix + 'cocokpasangan':
-      case prefix + 'pasangan':
+      case 'kecocokanpasangan':
+      case 'cocokpasangan':
+      case 'pasangan':
         {
           if (!text) throw `Example : ${prefix + command} Dika|Novia`;
           let [nama1, nama2] = text.split`|`;
@@ -3054,8 +3053,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'jadianpernikahan':
-      case prefix + 'jadiannikah':
+      case 'jadianpernikahan':
+      case 'jadiannikah':
         {
           if (!text) throw `Example : ${prefix + command} 6, 12, 2020`;
           let [tgl, bln, thn] = text.split`,`;
@@ -3068,7 +3067,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'sifatusaha':
+      case 'sifatusaha':
         {
           if (!ext) throw `Example : ${prefix + command} 28, 12, 2021`;
           let [tgl, bln, thn] = text.split`,`;
@@ -3081,8 +3080,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'rejeki':
-      case prefix + 'rezeki':
+      case 'rejeki':
+      case 'rezeki':
         {
           if (!text) throw `Example : ${prefix + command} 7, 7, 2005`;
           let [tgl, bln, thn] = text.split`,`;
@@ -3095,8 +3094,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'pekerjaan':
-      case prefix + 'kerja':
+      case 'pekerjaan':
+      case 'kerja':
         {
           if (!text) throw `Example : ${prefix + command} 7, 7, 2005`;
           let [tgl, bln, thn] = text.split`,`;
@@ -3109,9 +3108,9 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'ramalannasib':
-      case prefix + 'ramalnasib':
-      case prefix + 'nasib':
+      case 'ramalannasib':
+      case 'ramalnasib':
+      case 'nasib':
         {
           if (!text) throw `Example : 7, 7, 2005`;
           let [tgl, bln, thn] = text.split`,`;
@@ -3124,8 +3123,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'potensipenyakit':
-      case prefix + 'penyakit':
+      case 'potensipenyakit':
+      case 'penyakit':
         {
           if (!text) throw `Example : ${prefix + command} 7, 7, 2005`;
           let [tgl, bln, thn] = text.split`,`;
@@ -3138,8 +3137,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'artitarot':
-      case prefix + 'tarot':
+      case 'artitarot':
+      case 'tarot':
         {
           if (!text) throw `Example : ${prefix + command} 7, 7, 2005`;
           let [tgl, bln, thn] = text.split`,`;
@@ -3153,7 +3152,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'fengshui':
+      case 'fengshui':
         {
           if (!text)
             throw `Example : ${prefix + command} Dika, 1, 2005\n\nNote : ${
@@ -3169,7 +3168,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'haribaik':
+      case 'haribaik':
         {
           if (!text) throw `Example : ${prefix + command} 7, 7, 2005`;
           let [tgl, bln, thn] = text.split`,`;
@@ -3182,8 +3181,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'harisangar':
-      case prefix + 'taliwangke':
+      case 'harisangar':
+      case 'taliwangke':
         {
           if (!text) throw `Example : ${prefix + command} 7, 7, 2005`;
           let [tgl, bln, thn] = text.split`,`;
@@ -3196,8 +3195,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'harinaas':
-      case prefix + 'harisial':
+      case 'harinaas':
+      case 'harisial':
         {
           if (!text) throw `Example : ${prefix + command} 7, 7, 2005`;
           let [tgl, bln, thn] = text.split`,`;
@@ -3210,8 +3209,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'nagahari':
-      case prefix + 'harinaga':
+      case 'nagahari':
+      case 'harinaga':
         {
           if (!text) throw `Example : ${prefix + command} 7, 7, 2005`;
           let [tgl, bln, thn] = text.split`,`;
@@ -3224,8 +3223,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'arahrejeki':
-      case prefix + 'arahrezeki':
+      case 'arahrejeki':
+      case 'arahrezeki':
         {
           if (!text) throw `Example : ${prefix + command} 7, 7, 2005`;
           let [tgl, bln, thn] = text.split`,`;
@@ -3238,7 +3237,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'peruntungan':
+      case 'peruntungan':
         {
           if (!text)
             throw `Example : ${
@@ -3262,8 +3261,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'weton':
-      case prefix + 'wetonjawa':
+      case 'weton':
+      case 'wetonjawa':
         {
           if (!text) throw `Example : ${prefix + command} 7, 7, 2005`;
           let [tgl, bln, thn] = text.split`,`;
@@ -3276,8 +3275,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'sifat':
-      case prefix + 'karakter':
+      case 'sifat':
+      case 'karakter':
         {
           if (!text) throw `Example : ${prefix + command} Dika, 7, 7, 2005`;
           let [nama, tgl, bln, thn] = text.split`,`;
@@ -3295,7 +3294,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'keberuntungan':
+      case 'keberuntungan':
         {
           if (!text) throw `Example : ${prefix + command} Dika, 7, 7, 2005`;
           let [nama, tgl, bln, thn] = text.split`,`;
@@ -3308,7 +3307,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'memancing':
+      case 'memancing':
         {
           if (!text) throw `Example : ${prefix + command} 12, 1, 2022`;
           let [tgl, bln, thn] = text.split`,`;
@@ -3321,7 +3320,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'masasubur':
+      case 'masasubur':
         {
           if (!text)
             throw `Example : ${prefix + command} 12, 1, 2022, 28\n\nNote : ${
@@ -3337,8 +3336,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'zodiak':
-      case prefix + 'zodiac':
+      case 'zodiak':
+      case 'zodiac':
         {
           if (!text) throw `Example : ${prefix + command} 7 7 2005`;
           let zodiak = [
@@ -3382,7 +3381,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'shio':
+      case 'shio':
         {
           if (!text)
             throw `Example : ${
@@ -3393,8 +3392,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           hisoka.sendText(m.chat, `⭔ *Hasil :* ${anu.message}`, m);
         }
         break;
-      case prefix + 'tiktok':
-      case prefix + 'tiktoknowm':
+      case 'tiktok':
+      case 'tiktoknowm':
         {
           if (!text) throw 'Masukkan Query Link!';
           m.reply(mess.wait);
@@ -3423,8 +3422,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           hisoka.sendMessage(m.chat, buttonMessage, { quoted: m });
         }
         break;
-      case prefix + 'tiktokwm':
-      case prefix + 'tiktokwatermark':
+      case 'tiktokwm':
+      case 'tiktokwatermark':
         {
           if (!text) throw 'Masukkan Query Link!';
           m.reply(mess.wait);
@@ -3453,8 +3452,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           hisoka.sendMessage(m.chat, buttonMessage, { quoted: m });
         }
         break;
-      case prefix + 'tiktokmp3':
-      case prefix + 'tiktokaudio':
+      case 'tiktokmp3':
+      case 'tiktokaudio':
         {
           if (!text) throw 'Masukkan Query Link!';
           m.reply(mess.wait);
@@ -3492,9 +3491,9 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'instagram':
-      case prefix + 'ig':
-      case prefix + 'igdl':
+      case 'instagram':
+      case 'ig':
+      case 'igdl':
         {
           if (!text) throw 'No Query Url!';
           m.reply(mess.wait);
@@ -3534,8 +3533,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           }
         }
         break;
-      case prefix + 'joox':
-      case prefix + 'jooxdl':
+      case 'joox':
+      case 'jooxdl':
         {
           if (!text) throw 'No Query Title';
           m.reply(mess.wait);
@@ -3559,8 +3558,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'soundcloud':
-      case prefix + 'scdl':
+      case 'soundcloud':
+      case 'scdl':
         {
           if (!text) throw 'No Query Title';
           m.reply(mess.wait);
@@ -3588,8 +3587,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'twitdl':
-      case prefix + 'twitter':
+      case 'twitdl':
+      case 'twitter':
         {
           if (!text) throw 'Masukkan Query Link!';
           m.reply(mess.wait);
@@ -3613,8 +3612,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           hisoka.sendMessage(m.chat, buttonMessage, { quoted: m });
         }
         break;
-      case prefix + 'twittermp3':
-      case prefix + 'twitteraudio':
+      case 'twittermp3':
+      case 'twitteraudio':
         {
           if (!text) throw 'Masukkan Query Link!';
           m.reply(mess.wait);
@@ -3645,9 +3644,9 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'fbdl':
-      case prefix + 'fb':
-      case prefix + 'facebook':
+      case 'fbdl':
+      case 'fb':
+      case 'facebook':
         {
           if (!text) throw 'Masukkan Query Link!';
           m.reply(mess.wait);
@@ -3664,8 +3663,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'pindl':
-      case prefix + 'pinterestdl':
+      case 'pindl':
+      case 'pinterestdl':
         {
           if (!text) throw 'Masukkan Query Link!';
           m.reply(mess.wait);
@@ -3679,8 +3678,8 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
         }
         break;
-      case prefix + 'umma':
-      case prefix + 'ummadl':
+      case 'umma':
+      case 'ummadl':
         {
           if (!text)
             throw `Example : ${
@@ -3730,7 +3729,7 @@ Untuk Download Media Silahkan Klik salah satu Button dibawah ini atau masukkan c
           }
         }
         break;
-      case prefix + 'ringtone':
+      case 'ringtone':
         {
           if (!text) throw `Example : ${prefix + command} black rover`;
           let { ringtone } = require('./lib/scraper');
@@ -3747,7 +3746,7 @@ Untuk Download Media Silahkan Klik salah satu Button dibawah ini atau masukkan c
           );
         }
         break;
-      case prefix + 'iqra':
+      case 'iqra':
         {
           oh = `Example : ${
             prefix + command
@@ -3769,7 +3768,7 @@ Untuk Download Media Silahkan Klik salah satu Button dibawah ini atau masukkan c
             .catch((err) => m.reply(oh));
         }
         break;
-      case prefix + 'juzamma':
+      case 'juzamma':
         {
           if (args[0] === 'pdf') {
             m.reply(mess.wait);
@@ -3833,8 +3832,8 @@ Format yang tersedia : pdf, docx, pptx, xlsx`);
           }
         }
         break;
-      case prefix + 'hadis':
-      case prefix + 'hadist':
+      case 'hadis':
+      case 'hadist':
         {
           if (!args[0])
             throw `Contoh:
@@ -3877,7 +3876,7 @@ ${id}`);
           }
         }
         break;
-      case prefix + 'alquran':
+      case 'alquran':
         {
           if (!args[0])
             throw `Contoh penggunaan:\n${
@@ -3906,7 +3905,7 @@ ${id}`);
           );
         }
         break;
-      case prefix + 'tafsirsurah':
+      case 'tafsirsurah':
         {
           if (!args[0])
             throw `Contoh penggunaan:\n${
@@ -3929,18 +3928,18 @@ ${id}`);
           m.reply(txt);
         }
         break;
-      case prefix + 'bass':
-      case prefix + 'blown':
-      case prefix + 'deep':
-      case prefix + 'earrape':
-      case prefix + 'fast':
-      case prefix + 'fat':
-      case prefix + 'nightcore':
-      case prefix + 'reverse':
-      case prefix + 'robot':
-      case prefix + 'slow':
-      case prefix + 'smooth':
-      case prefix + 'tupai':
+      case 'bass':
+      case 'blown':
+      case 'deep':
+      case 'earrape':
+      case 'fast':
+      case 'fat':
+      case 'nightcore':
+      case 'reverse':
+      case 'robot':
+      case 'slow':
+      case 'smooth':
+      case 'tupai':
         try {
           let set;
           if (/bass/.test(command))
@@ -3990,7 +3989,7 @@ ${id}`);
           m.reply(e);
         }
         break;
-      case prefix + 'setcmd':
+      case 'setcmd':
         {
           if (!m.quoted) throw 'Reply Pesan!';
           if (!m.quoted.fileSha256) throw 'SHA256 Hash Missing';
@@ -4008,7 +4007,7 @@ ${id}`);
           m.reply(`Done!`);
         }
         break;
-      case prefix + 'delcmd':
+      case 'delcmd':
         {
           let hash = m.quoted.fileSha256.toString('base64');
           if (!hash) throw `Tidak ada hash`;
@@ -4018,7 +4017,7 @@ ${id}`);
           m.reply(`Done!`);
         }
         break;
-      case prefix + 'listcmd':
+      case 'listcmd':
         {
           let teks = `
 *List Hash*
@@ -4037,7 +4036,7 @@ ${Object.entries(global.db.sticker)
           });
         }
         break;
-      case prefix + 'lockcmd':
+      case 'lockcmd':
         {
           if (!isCreator) throw mess.owner;
           if (!m.quoted) throw 'Reply Pesan!';
@@ -4048,7 +4047,7 @@ ${Object.entries(global.db.sticker)
           m.reply('Done!');
         }
         break;
-      case prefix + 'addmsg':
+      case 'addmsg':
         {
           if (!m.quoted) throw 'Reply Message Yang Ingin Disave Di Database';
           if (!text) throw `Example : ${prefix + command} nama file`;
@@ -4063,7 +4062,7 @@ Akses dengan ${prefix}getmsg ${text}
 Lihat list Pesan Dengan ${prefix}listmsg`);
         }
         break;
-      case prefix + 'getmsg':
+      case 'getmsg':
         {
           if (!text)
             throw `Example : ${
@@ -4075,7 +4074,7 @@ Lihat list Pesan Dengan ${prefix}listmsg`);
           hisoka.copyNForward(m.chat, msgs[text.toLowerCase()], true);
         }
         break;
-      case prefix + 'listmsg':
+      case 'listmsg':
         {
           let msgs = JSON.parse(fs.readFileSync('./src/database.json'));
           let seplit = Object.entries(global.db.database).map(([nama, isi]) => {
@@ -4090,8 +4089,8 @@ Lihat list Pesan Dengan ${prefix}listmsg`);
           m.reply(teks);
         }
         break;
-      case prefix + 'delmsg':
-      case prefix + 'deletemsg':
+      case 'delmsg':
+      case 'deletemsg':
         {
           let msgs = global.db.database;
           if (!(text.toLowerCase() in msgs))
@@ -4100,7 +4099,7 @@ Lihat list Pesan Dengan ${prefix}listmsg`);
           m.reply(`Berhasil menghapus '${text}' dari list pesan`);
         }
         break;
-      case prefix + 'anonymous':
+      case 'anonymous':
         {
           if (m.isGroup)
             return m.reply('Fitur Tidak Dapat Digunakan Untuk Group!');
@@ -4123,8 +4122,8 @@ Lihat list Pesan Dengan ${prefix}listmsg`);
           );
         }
         break;
-      case prefix + 'keluar':
-      case prefix + 'leave': {
+      case 'keluar':
+      case 'leave': {
         if (m.isGroup)
           return m.reply('Fitur Tidak Dapat Digunakan Untuk Group!');
         this.anonymous = this.anonymous ? this.anonymous : {};
@@ -4157,8 +4156,8 @@ Lihat list Pesan Dengan ${prefix}listmsg`);
         delete this.anonymous[room.id];
         if (command === 'leave') break;
       }
-      case prefix + 'mulai':
-      case prefix + 'start': {
+      case 'mulai':
+      case 'start': {
         if (m.isGroup)
           return m.reply('Fitur Tidak Dapat Digunakan Untuk Group!');
         this.anonymous = this.anonymous ? this.anonymous : {};
@@ -4240,8 +4239,8 @@ Lihat list Pesan Dengan ${prefix}listmsg`);
         }
         break;
       }
-      case prefix + 'next':
-      case prefix + 'lanjut': {
+      case 'next':
+      case 'lanjut': {
         if (m.isGroup)
           return m.reply('Fitur Tidak Dapat Digunakan Untuk Group!');
         this.anonymous = this.anonymous ? this.anonymous : {};
@@ -4330,23 +4329,23 @@ Lihat list Pesan Dengan ${prefix}listmsg`);
         }
         break;
       }
-      case prefix + 'public':
+      case 'public':
         {
           if (!isCreator) throw mess.owner;
           hisoka.public = true;
           m.reply('Sukse Change To Public Usage');
         }
         break;
-      case prefix + 'self':
+      case 'self':
         {
           if (!isCreator) throw mess.owner;
           hisoka.public = false;
           m.reply('Sukses Change To Self Usage');
         }
         break;
-      case prefix + 'ping':
-      case prefix + 'botstatus':
-      case prefix + 'statusbot':
+      case 'ping':
+      case 'botstatus':
+      case 'statusbot':
         {
           const used = process.memoryUsage();
           const cpus = os.cpus().map((cpu) => {
@@ -4436,16 +4435,16 @@ ${cpus
           m.reply(respon);
         }
         break;
-      case prefix + 'owner':
-      case prefix + 'creator':
+      case 'owner':
+      case 'creator':
         {
           hisoka.sendContact(m.chat, global.owner, m);
         }
         break;
-      case prefix + 'list':
-      case prefix + 'menu':
-      case prefix + 'help':
-      case prefix + '?':
+      case 'list':
+      case 'menu':
+      case 'help':
+      case '?':
         {
           anu = `┌──⭓ *Group Menu*
 │
