@@ -72,25 +72,44 @@ let vote = (db.others.vote = []);
 
 module.exports = hisoka = async (hisoka, m, chatUpdate, store) => {
   try {
+    // var body =
+    //   m.mtype === 'conversation'
+    //     ? m.message.conversation
+    //     : m.mtype == 'imageMessage'
+    //     ? m.message.imageMessage.caption
+    //     : m.mtype == 'videoMessage'
+    //     ? m.message.videoMessage.caption
+    //     : m.mtype == 'extendedTextMessage'
+    //     ? m.message.extendedTextMessage.text
+    //     : m.mtype == 'buttonsResponseMessage'
+    //     ? m.message.buttonsResponseMessage.selectedButtonId
+    //     : m.mtype == 'listResponseMessage'
+    //     ? m.message.listResponseMessage.singleSelectReply.selectedRowId
+    //     : m.mtype == 'templateButtonReplyMessage'
+    //     ? m.message.templateButtonReplyMessage.selectedId
+    //     : m.mtype === 'messageContextInfo'
+    //     ? m.message.buttonsResponseMessage?.selectedButtonId ||
+    //       m.message.listResponseMessage?.singleSelectReply.selectedRowId ||
+    //       m.text
+    //     : '';
     var body =
-      m.mtype === 'conversation'
-        ? m.message.conversation
-        : m.mtype == 'imageMessage'
-        ? m.message.imageMessage.caption
-        : m.mtype == 'videoMessage'
-        ? m.message.videoMessage.caption
-        : m.mtype == 'extendedTextMessage'
-        ? m.message.extendedTextMessage.text
-        : m.mtype == 'buttonsResponseMessage'
-        ? m.message.buttonsResponseMessage.selectedButtonId
-        : m.mtype == 'listResponseMessage'
-        ? m.message.listResponseMessage.singleSelectReply.selectedRowId
-        : m.mtype == 'templateButtonReplyMessage'
-        ? m.message.templateButtonReplyMessage.selectedId
-        : m.mtype === 'messageContextInfo'
-        ? m.message.buttonsResponseMessage?.selectedButtonId ||
-          m.message.listResponseMessage?.singleSelectReply.selectedRowId ||
-          m.text
+      m.mtype === 'listResponseMessage' && mek.message.listResponseMessage.title
+        ? mek.message.listResponseMessage.title
+        : m.mtype === 'buttonsResponseMessage' &&
+          mek.message.buttonsResponseMessage.selectedButtonId
+        ? mek.message.buttonsResponseMessage.selectedButtonId
+        : m.mtype === 'conversation' &&
+          mek.message.conversation.startsWith(prefix)
+        ? mek.message.conversation
+        : m.mtype == 'imageMessage' &&
+          mek.message.imageMessage.caption.startsWith(prefix)
+        ? mek.message.imageMessage.caption
+        : m.mtype == 'videoMessage' &&
+          mek.message.videoMessage.caption.startsWith(prefix)
+        ? mek.message.videoMessage.caption
+        : m.mtype == 'extendedTextMessage' &&
+          mek.message.extendedTextMessage.text.startsWith(prefix)
+        ? mek.message.extendedTextMessage.text
         : '';
     var budy = typeof m.text == 'string' ? m.text : '';
     var prefix = '.';
