@@ -171,7 +171,7 @@ async function startHisoka() {
             else { console.log(`Unknown DisconnectReason: ${reason}|${connection}`) }
         }
         console.log('Connected...', update)
-        hisoka.sendMessage(global.ownerNumber, { text: `*BOT BERHASIL CONNECT!!`}, )
+        hisoka.sendMessage(global.ownerNumber, { text: `*BOT BERHASIL CONNECT!!*`}, )
 
     })
 
