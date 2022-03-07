@@ -4759,19 +4759,19 @@ ${cpus
                     {
                       quickReplyButton: {
                         displayText: 'Status Bot',
-                        id: 'ping',
+                        id: prefix + 'ping',
                       },
                     },
                     {
                       quickReplyButton: {
                         displayText: 'Contact Owner',
-                        id: 'owner',
+                        id: prefix + 'owner',
                       },
                     },
                     {
                       quickReplyButton: {
                         displayText: 'Script',
-                        id: 'sc',
+                        id: prefix + 'sc',
                       },
                     },
                   ],

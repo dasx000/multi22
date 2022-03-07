@@ -57,7 +57,8 @@ async function startHisoka() {
             console.log(err)
         }
     })
-
+    
+    /*
     hisoka.ev.on('group-participants.update', async (anu) => {
         console.log(anu)
         try {
@@ -88,6 +89,8 @@ async function startHisoka() {
             console.log(err)
         }
     })
+
+    */
 	
     // Setting
     hisoka.decodeJid = (jid) => {
