@@ -93,11 +93,12 @@ module.exports = hisoka = async (hisoka, m, chatUpdate, store) => {
           m.text
         : '';
     var budy = typeof m.text == 'string' ? m.text : '';
-    var prefix = prefa
-      ? /^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#$%^&.©^]/gi.test(body)
-        ? body.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#$%^&.©^]/gi)[0]
-        : ''
-      : prefa ?? global.prefix;
+    // var prefix = prefa
+    //   ? /^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#$%^&.©^]/gi.test(body)
+    //     ? body.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#$%^&.©^]/gi)[0]
+    //     : ''
+    //   : prefa ?? global.prefix;
+    var prefix = '.';
     const isCmd = body.startsWith(prefix);
     const command = body
       .replace(prefix, '')
@@ -699,6 +700,10 @@ Selama ${clockString(new Date() - user.afkTime)}
     }
 
     switch (command) {
+      case 'setprefix':
+        prefix = q;
+        m.reply(`Succes Mengganti Prefix : ${q}`);
+        break;
       case 'afk':
         {
           let user = global.db.users[m.sender];
