@@ -70,6 +70,8 @@ let tebaklirik = (db.game.lirik = []);
 let tebaktebakan = (db.game.tebakan = []);
 let vote = (db.others.vote = []);
 
+var prefix = '.';
+
 module.exports = hisoka = async (hisoka, m, chatUpdate, store) => {
   try {
     var body =
@@ -98,7 +100,7 @@ module.exports = hisoka = async (hisoka, m, chatUpdate, store) => {
     //     ? body.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#$%^&.©^]/gi)[0]
     //     : ''
     //   : prefa ?? global.prefix;
-    var prefix = '.';
+
     const isCmd = body.startsWith(prefix);
     const command = body
       .replace(prefix, '')
