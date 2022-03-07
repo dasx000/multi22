@@ -882,7 +882,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
       case 'sc':
         {
           m.reply(
-            'Script : https://github.com/DikaArdnt/das-Morou\n\n Dont Forget Give Star\n\nDonate : 6281615075793 (Link Aja)\nSaweria : https://saweria.co/DikaArdnt\nPaypal : https://www.paypal.me/Cakhaho\n\n Dont Forget Donate'
+            'Script : https://github.com/DikaArdnt/hisoka-Morou\n\n Dont Forget Give Star\n\nDonate : 6281615075793 (Link Aja)\nSaweria : https://saweria.co/DikaArdnt\nPaypal : https://www.paypal.me/Cakhaho\n\n Dont Forget Donate'
           );
         }
         break;
@@ -1868,7 +1868,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
               {
                 urlButton: {
                   displayText: 'Source Code',
-                  url: 'https://github.com/DikaArdnt/das-Morou',
+                  url: 'https://github.com/DikaArdnt/hisoka-Morou',
                 },
               },
               {
@@ -1896,7 +1896,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
                 },
               },
             ];
-            fatihgans = fs.readFileSync('./lib/das.jpg');
+            fatihgans = fs.readFileSync('./lib/hisoka.jpg');
             let txt = `「 Broadcast Bot 」\n\n${text}`;
             das.send5ButImg(i, txt, das.user.name, fatihgans, btn);
           }
@@ -1922,7 +1922,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
               {
                 urlButton: {
                   displayText: 'Source Code',
-                  url: 'https://github.com/DikaArdnt/das-Morou',
+                  url: 'https://github.com/DikaArdnt/hisoka-Morou',
                 },
               },
               {
@@ -1950,7 +1950,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
                 },
               },
             ];
-            fatihgans = fs.readFileSync('./lib/das.jpg');
+            fatihgans = fs.readFileSync('./lib/hisoka.jpg');
             let txt = `「 Broadcast Bot 」\n\n${text}`;
             das.send5ButImg(yoi, txt, das.user.name, fatihgans, btn);
           }
@@ -4733,7 +4733,7 @@ ${cpus
 │
 └───────⭓`;
           let message = await prepareWAMessageMedia(
-            { image: fs.readFileSync('./lib/das.jpg') },
+            { image: fs.readFileSync('./lib/hisoka.jpg') },
             { upload: das.waUploadToServer }
           );
           const template = generateWAMessageFromContent(
@@ -4747,7 +4747,7 @@ ${cpus
                     {
                       urlButton: {
                         displayText: 'Source Code',
-                        url: 'https://github.com/DikaArdnt/das-Morou',
+                        url: 'https://github.com/DikaArdnt/hisoka-Morou',
                       },
                     },
                     {
