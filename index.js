@@ -32,15 +32,15 @@ async function startHisoka() {
 
     store.bind(hisoka.ev)
 
-    hisoka.ws.on('CB:call', async (json) => {
-    const callerId = json.content[0].attrs['call-creator']
-    if (json.content[0].tag == 'offer') {
-    let pa7rick = await hisoka.sendContact(callerId, global.owner)
-    hisoka.sendMessage(callerId, { text: `Sistem otomatis block!\nJangan menelpon bot!\nSilahkan Hubungi Owner Untuk Dibuka !`}, { quoted : pa7rick })
-    await sleep(8000)
-    await hisoka.updateBlockStatus(callerId, "block")
-    }
-    })
+    // hisoka.ws.on('CB:call', async (json) => {
+    // const callerId = json.content[0].attrs['call-creator']
+    // if (json.content[0].tag == 'offer') {
+    // let pa7rick = await hisoka.sendContact(callerId, global.owner)
+    // hisoka.sendMessage(callerId, { text: `Sistem otomatis block!\nJangan menelpon bot!\nSilahkan Hubungi Owner Untuk Dibuka !`}, { quoted : pa7rick })
+    // await sleep(8000)
+    // await hisoka.updateBlockStatus(callerId, "block")
+    // }
+    // })
 
     hisoka.ev.on('messages.upsert', async chatUpdate => {
         //console.log(JSON.stringify(chatUpdate, undefined, 2))
@@ -97,6 +97,8 @@ async function startHisoka() {
             return decode.user && decode.server && decode.user + '@' + decode.server || jid
         } else return jid
     }
+    
+
     
     hisoka.ev.on('contacts.update', update => {
         for (let contact of update) {
@@ -169,6 +171,8 @@ async function startHisoka() {
             else { console.log(`Unknown DisconnectReason: ${reason}|${connection}`) }
         }
         console.log('Connected...', update)
+        hisoka.sendMessage(global.ownerNumber, { text: `*BOT BERHASIL CONNECT!!`}, )
+
     })
 
     hisoka.ev.on('creds.update', saveState)
