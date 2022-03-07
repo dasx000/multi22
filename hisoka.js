@@ -76,13 +76,13 @@ module.exports = das = async (das, m, chatUpdate, store) => {
   try {
     var body =
       m.mtype === 'conversation'
-        ? m.message.conversation
+        ? m.message.conversation.startsWith(prefix)
         : m.mtype == 'imageMessage'
-        ? m.message.imageMessage.caption
+        ? m.message.imageMessage.caption.startsWith(prefix)
         : m.mtype == 'videoMessage'
-        ? m.message.videoMessage.caption
+        ? m.message.videoMessage.caption.startsWith(prefix)
         : m.mtype == 'extendedTextMessage'
-        ? m.message.extendedTextMessage.text
+        ? m.message.extendedTextMessage.text.startsWith(prefix)
         : m.mtype == 'buttonsResponseMessage'
         ? m.message.buttonsResponseMessage.selectedButtonId
         : m.mtype == 'listResponseMessage'
