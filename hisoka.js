@@ -70,7 +70,7 @@ let tebaklirik = (db.game.lirik = []);
 let tebaktebakan = (db.game.tebakan = []);
 let vote = (db.others.vote = []);
 
-var prefix = '.';
+let prefix = '.';
 
 module.exports = das = async (das, m, chatUpdate, store) => {
   try {
@@ -234,7 +234,7 @@ module.exports = das = async (das, m, chatUpdate, store) => {
       das.ev.emit('messages.upsert', msg);
     }
 
-    if ('family100' + m.chat in _family100 && isCmd) {
+    if ('family100' + m.chat in _family100 && !isCmd) {
       kuis = true;
       let room = _family100['family100' + m.chat];
       let teks = budy.toLowerCase().replace(/[^\w\s\-]+/, '');
@@ -278,7 +278,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
       if (isWin || isSurender) delete _family100['family100' + m.chat];
     }
 
-    if (tebaklagu.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+    if (tebaklagu.hasOwnProperty(m.sender.split('@')[0]) && !isCmd) {
       kuis = true;
       jawaban = tebaklagu[m.sender.split('@')[0]];
       if (budy.toLowerCase() == jawaban) {
@@ -299,7 +299,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
       } else m.reply('*Jawaban Salah!*');
     }
 
-    if (kuismath.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+    if (kuismath.hasOwnProperty(m.sender.split('@')[0]) && !isCmd) {
       kuis = true;
       jawaban = kuismath[m.sender.split('@')[0]];
       if (budy.toLowerCase() == jawaban) {
@@ -310,7 +310,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
       } else m.reply('*Jawaban Salah!*');
     }
 
-    if (tebakgambar.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+    if (tebakgambar.hasOwnProperty(m.sender.split('@')[0]) && !isCmd) {
       kuis = true;
       jawaban = tebakgambar[m.sender.split('@')[0]];
       if (budy.toLowerCase() == jawaban) {
@@ -331,7 +331,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
       } else m.reply('*Jawaban Salah!*');
     }
 
-    if (tebakkata.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+    if (tebakkata.hasOwnProperty(m.sender.split('@')[0]) && !isCmd) {
       kuis = true;
       jawaban = tebakkata[m.sender.split('@')[0]];
       if (budy.toLowerCase() == jawaban) {
@@ -352,7 +352,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
       } else m.reply('*Jawaban Salah!*');
     }
 
-    if (caklontong.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+    if (caklontong.hasOwnProperty(m.sender.split('@')[0]) && !isCmd) {
       kuis = true;
       jawaban = caklontong[m.sender.split('@')[0]];
       deskripsi = caklontong_desk[m.sender.split('@')[0]];
@@ -375,7 +375,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
       } else m.reply('*Jawaban Salah!*');
     }
 
-    if (tebakkalimat.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+    if (tebakkalimat.hasOwnProperty(m.sender.split('@')[0]) && !isCmd) {
       kuis = true;
       jawaban = tebakkalimat[m.sender.split('@')[0]];
       if (budy.toLowerCase() == jawaban) {
@@ -396,7 +396,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
       } else m.reply('*Jawaban Salah!*');
     }
 
-    if (tebaklirik.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+    if (tebaklirik.hasOwnProperty(m.sender.split('@')[0]) && !isCmd) {
       kuis = true;
       jawaban = tebaklirik[m.sender.split('@')[0]];
       if (budy.toLowerCase() == jawaban) {
@@ -417,7 +417,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
       } else m.reply('*Jawaban Salah!*');
     }
 
-    if (tebaktebakan.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+    if (tebaktebakan.hasOwnProperty(m.sender.split('@')[0]) && !isCmd) {
       kuis = true;
       jawaban = tebaktebakan[m.sender.split('@')[0]];
       if (budy.toLowerCase() == jawaban) {
@@ -4832,7 +4832,7 @@ ${cpus
           });
         }
 
-        if (m.chat.endsWith('@s.whatsapp.net') && isCmd) {
+        if (m.chat.endsWith('@s.whatsapp.net') && !isCmd) {
           this.anonymous = this.anonymous ? this.anonymous : {};
           let room = Object.values(this.anonymous).find(
             (room) =>
@@ -4872,7 +4872,7 @@ ${cpus
           return !0;
         }
 
-        if (isCmd && budy.toLowerCase() != undefined) {
+        if (!isCmd && budy.toLowerCase() != undefined) {
           if (m.chat.endsWith('broadcast')) return;
           if (m.isBaileys) return;
           let msgs = global.db.database;
