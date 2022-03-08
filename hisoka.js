@@ -286,7 +286,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
           m.chat,
           [
             {
-              buttonId: prefix + 'tebak lagu',
+              buttonId: 'tebak lagu',
               buttonText: { displayText: 'Tebak Lagu' },
               type: 1,
             },
@@ -318,7 +318,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
           m.chat,
           [
             {
-              buttonId: prefix + 'tebak gambar',
+              buttonId: 'tebak gambar',
               buttonText: { displayText: 'Tebak Gambar' },
               type: 1,
             },
@@ -339,7 +339,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
           m.chat,
           [
             {
-              buttonId: prefix + 'tebak kata',
+              buttonId: 'tebak kata',
               buttonText: { displayText: 'Tebak Kata' },
               type: 1,
             },
@@ -361,7 +361,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
           m.chat,
           [
             {
-              buttonId: prefix + 'tebak lontong',
+              buttonId: 'tebak lontong',
               buttonText: { displayText: 'Tebak Lontong' },
               type: 1,
             },
@@ -383,7 +383,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
           m.chat,
           [
             {
-              buttonId: prefix + 'tebak kalimat',
+              buttonId: 'tebak kalimat',
               buttonText: { displayText: 'Tebak Kalimat' },
               type: 1,
             },
@@ -404,7 +404,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
           m.chat,
           [
             {
-              buttonId: prefix + 'tebak lirik',
+              buttonId: 'tebak lirik',
               buttonText: { displayText: 'Tebak Lirik' },
               type: 1,
             },
@@ -425,7 +425,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
           m.chat,
           [
             {
-              buttonId: prefix + 'tebak tebakan',
+              buttonId: 'tebak tebakan',
               buttonText: { displayText: 'Tebak Tebakan' },
               type: 1,
             },
@@ -1014,7 +1014,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
                 m.chat,
                 [
                   {
-                    buttonId: prefix + 'tebak lagu',
+                    buttonId: 'tebak lagu',
                     buttonText: { displayText: 'Tebak Lagu' },
                     type: 1,
                   },
@@ -1052,7 +1052,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
                 m.chat,
                 [
                   {
-                    buttonId: prefix + 'tebak gambar',
+                    buttonId: 'tebak gambar',
                     buttonText: { displayText: 'Tebak Gambar' },
                     type: 1,
                   },
@@ -1089,7 +1089,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
                 m.chat,
                 [
                   {
-                    buttonId: prefix + 'tebak kata',
+                    buttonId: 'tebak kata',
                     buttonText: { displayText: 'Tebak Kata' },
                     type: 1,
                   },
@@ -1126,7 +1126,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
                 m.chat,
                 [
                   {
-                    buttonId: prefix + 'tebak kalimat',
+                    buttonId: 'tebak kalimat',
                     buttonText: { displayText: 'Tebak Kalimat' },
                     type: 1,
                   },
@@ -1163,7 +1163,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
                 m.chat,
                 [
                   {
-                    buttonId: prefix + 'tebak lirik',
+                    buttonId: 'tebak lirik',
                     buttonText: { displayText: 'Tebak Lirik' },
                     type: 1,
                   },
@@ -1201,7 +1201,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
                 m.chat,
                 [
                   {
-                    buttonId: prefix + 'tebak lontong',
+                    buttonId: 'tebak lontong',
                     buttonText: { displayText: 'Tebak Lontong' },
                     type: 1,
                   },
@@ -1264,7 +1264,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
           let ments = [me, jodoh];
           let buttons = [
             {
-              buttonId: prefix + 'jodohku',
+              buttonId: 'jodohku',
               buttonText: { displayText: 'Jodohku' },
               type: 1,
             },
@@ -1286,7 +1286,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
           let menst = [orang, jodoh];
           let buttons = [
             {
-              buttonId: prefix + 'jadian',
+              buttonId: 'jadian',
               buttonText: { displayText: 'Jodohku' },
               type: 1,
             },
@@ -1553,12 +1553,12 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`;
 *${prefix}hapusvote* - untuk menghapus vote`;
           let buttonsVote = [
             {
-              buttonId: prefix + `${prefix}upvote`,
+              buttonId: `${prefix}upvote`,
               buttonText: { displayText: '𝚄𝙿𝚅𝙾𝚃𝙴' },
               type: 1,
             },
             {
-              buttonId: prefix + `${prefix}devote`,
+              buttonId: `${prefix}devote`,
               buttonText: { displayText: '𝙳𝙴𝚅𝙾𝚃𝙴' },
               type: 1,
             },
@@ -1604,12 +1604,12 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
 *${prefix}hapusvote* - untuk menghapus vote`;
           let buttonsUpvote = [
             {
-              buttonId: prefix + `${prefix}upvote`,
+              buttonId: `${prefix}upvote`,
               buttonText: { displayText: '𝚄𝙿𝚅𝙾𝚃𝙴' },
               type: 1,
             },
             {
-              buttonId: prefix + `${prefix}devote`,
+              buttonId: `${prefix}devote`,
               buttonText: { displayText: '𝙳𝙴𝚅𝙾𝚃𝙴' },
               type: 1,
             },
@@ -1656,12 +1656,12 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
 *${prefix}hapusvote* - untuk menghapus vote`;
           let buttonsDevote = [
             {
-              buttonId: prefix + `${prefix}upvote`,
+              buttonId: `${prefix}upvote`,
               buttonText: { displayText: '𝚄𝙿𝚅𝙾𝚃𝙴' },
               type: 1,
             },
             {
-              buttonId: prefix + `${prefix}devote`,
+              buttonId: `${prefix}devote`,
               buttonText: { displayText: '𝙳𝙴𝚅𝙾𝚃𝙴' },
               type: 1,
             },
@@ -1737,12 +1737,12 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           } else {
             let buttons = [
               {
-                buttonId: prefix + 'group open',
+                buttonId: 'group open',
                 buttonText: { displayText: 'Open' },
                 type: 1,
               },
               {
-                buttonId: prefix + 'group close',
+                buttonId: 'group close',
                 buttonText: { displayText: 'Close' },
                 type: 1,
               },
@@ -1775,12 +1775,12 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           } else {
             let buttons = [
               {
-                buttonId: prefix + 'editinfo open',
+                buttonId: 'editinfo open',
                 buttonText: { displayText: 'Open' },
                 type: 1,
               },
               {
-                buttonId: prefix + 'editinfo close',
+                buttonId: 'editinfo close',
                 buttonText: { displayText: 'Close' },
                 type: 1,
               },
@@ -2368,7 +2368,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
             images = n[Math.floor(Math.random() * n.length)].url;
             let buttons = [
               {
-                buttonId: prefix + `gimage ${text}`,
+                buttonId: `gimage ${text}`,
                 buttonText: { displayText: 'Next Image' },
                 type: 1,
               },
@@ -2396,12 +2396,12 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
             search.videos[Math.floor(Math.random() * search.videos.length)];
           let buttons = [
             {
-              buttonId: prefix + `ytmp3 ${anu.url}`,
+              buttonId: `ytmp3 ${anu.url}`,
               buttonText: { displayText: '♫ Audio' },
               type: 1,
             },
             {
-              buttonId: prefix + `ytmp4 ${anu.url}`,
+              buttonId: `ytmp4 ${anu.url}`,
               buttonText: { displayText: '► Video' },
               type: 1,
             },
@@ -2617,7 +2617,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
         {
           let buttons = [
             {
-              buttonId: prefix + `coffe`,
+              buttonId: `coffe`,
               buttonText: { displayText: 'Next Image' },
               type: 1,
             },
@@ -2640,7 +2640,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           result = anu[Math.floor(Math.random() * anu.length)];
           let buttons = [
             {
-              buttonId: prefix + `wallpaper ${text}`,
+              buttonId: `wallpaper ${text}`,
               buttonText: { displayText: 'Next Image' },
               type: 1,
             },
@@ -2667,7 +2667,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           result = anu[Math.floor(Math.random() * anu.length)];
           let buttons = [
             {
-              buttonId: prefix + `wikimedia ${text}`,
+              buttonId: `wikimedia ${text}`,
               buttonText: { displayText: 'Next Image' },
               type: 1,
             },
@@ -2690,7 +2690,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           result = anu[Math.floor(Math.random() * anu.length)];
           let buttons = [
             {
-              buttonId: prefix + `quotesanime`,
+              buttonId: `quotesanime`,
               buttonText: { displayText: 'Next' },
               type: 1,
             },
@@ -2715,7 +2715,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
           let buttons = [
             {
-              buttonId: prefix + `motivasi`,
+              buttonId: `motivasi`,
               buttonText: { displayText: 'Next' },
               type: 1,
             },
@@ -3398,12 +3398,12 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
           let buttons = [
             {
-              buttonId: prefix + `tiktokwm ${text}`,
+              buttonId: `tiktokwm ${text}`,
               buttonText: { displayText: '► With Watermark' },
               type: 1,
             },
             {
-              buttonId: prefix + `tiktokmp3 ${text}`,
+              buttonId: `tiktokmp3 ${text}`,
               buttonText: { displayText: '♫ Audio' },
               type: 1,
             },
@@ -3428,12 +3428,12 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
           let buttons = [
             {
-              buttonId: prefix + `tiktoknowm ${text}`,
+              buttonId: `tiktoknowm ${text}`,
               buttonText: { displayText: '► No Watermark' },
               type: 1,
             },
             {
-              buttonId: prefix + `tiktokmp3 ${text}`,
+              buttonId: `tiktokmp3 ${text}`,
               buttonText: { displayText: '♫ Audio' },
               type: 1,
             },
@@ -3458,12 +3458,12 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
           let buttons = [
             {
-              buttonId: prefix + `tiktoknowm ${text}`,
+              buttonId: `tiktoknowm ${text}`,
               buttonText: { displayText: '► No Watermark' },
               type: 1,
             },
             {
-              buttonId: prefix + `tiktokwm ${text}`,
+              buttonId: `tiktokwm ${text}`,
               buttonText: { displayText: '► With Watermark' },
               type: 1,
             },
@@ -3593,7 +3593,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
           let buttons = [
             {
-              buttonId: prefix + `twittermp3 ${text}`,
+              buttonId: `twittermp3 ${text}`,
               buttonText: { displayText: '► Audio' },
               type: 1,
             },
@@ -3618,7 +3618,7 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           );
           let buttons = [
             {
-              buttonId: prefix + `twitter ${text}`,
+              buttonId: `twitter ${text}`,
               buttonText: { displayText: '► Video' },
               type: 1,
             },
@@ -3686,12 +3686,12 @@ ${vote[m.chat][2].map((v, i) => `├ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
           if (anu.type == 'video') {
             let buttons = [
               {
-                buttonId: prefix + `ytmp3 ${anu.media[0]} 128kbps`,
+                buttonId: `ytmp3 ${anu.media[0]} 128kbps`,
                 buttonText: { displayText: '♫ Audio' },
                 type: 1,
               },
               {
-                buttonId: prefix + `ytmp4 ${anu.media[0]} 360p`,
+                buttonId: `ytmp4 ${anu.media[0]} 360p`,
                 buttonText: { displayText: '► Video' },
                 type: 1,
               },
@@ -4102,7 +4102,7 @@ Lihat list Pesan Dengan ${prefix}listmsg`);
           this.anonymous = this.anonymous ? this.anonymous : {};
           let buttons = [
             {
-              buttonId: prefix + 'start',
+              buttonId: 'start',
               buttonText: { displayText: 'Start' },
               type: 1,
             },
@@ -4129,7 +4129,7 @@ Lihat list Pesan Dengan ${prefix}listmsg`);
         if (!room) {
           let buttons = [
             {
-              buttonId: prefix + 'start',
+              buttonId: 'start',
               buttonText: { displayText: 'Start' },
               type: 1,
             },
@@ -4162,7 +4162,7 @@ Lihat list Pesan Dengan ${prefix}listmsg`);
         ) {
           let buttons = [
             {
-              buttonId: prefix + 'keluar',
+              buttonId: 'keluar',
               buttonText: { displayText: 'Stop' },
               type: 1,
             },
@@ -4182,12 +4182,12 @@ Lihat list Pesan Dengan ${prefix}listmsg`);
         if (room) {
           let buttons = [
             {
-              buttonId: prefix + 'next',
+              buttonId: 'next',
               buttonText: { displayText: 'Skip' },
               type: 1,
             },
             {
-              buttonId: prefix + 'keluar',
+              buttonId: 'keluar',
               buttonText: { displayText: 'Stop' },
               type: 1,
             },
@@ -4224,7 +4224,7 @@ Lihat list Pesan Dengan ${prefix}listmsg`);
           };
           let buttons = [
             {
-              buttonId: prefix + 'keluar',
+              buttonId: 'keluar',
               buttonText: { displayText: 'Stop' },
               type: 1,
             },
@@ -4250,7 +4250,7 @@ Lihat list Pesan Dengan ${prefix}listmsg`);
         if (!romeo) {
           let buttons = [
             {
-              buttonId: prefix + 'start',
+              buttonId: 'start',
               buttonText: { displayText: 'Start' },
               type: 1,
             },
@@ -4276,12 +4276,12 @@ Lihat list Pesan Dengan ${prefix}listmsg`);
         if (room) {
           let buttons = [
             {
-              buttonId: prefix + 'next',
+              buttonId: 'next',
               buttonText: { displayText: 'Skip' },
               type: 1,
             },
             {
-              buttonId: prefix + 'keluar',
+              buttonId: 'keluar',
               buttonText: { displayText: 'Stop' },
               type: 1,
             },
@@ -4318,7 +4318,7 @@ Lihat list Pesan Dengan ${prefix}listmsg`);
           };
           let buttons = [
             {
-              buttonId: prefix + 'keluar',
+              buttonId: 'keluar',
               buttonText: { displayText: 'Stop' },
               type: 1,
             },
@@ -4766,19 +4766,19 @@ ${cpus
                     {
                       quickReplyButton: {
                         displayText: 'Status Bot',
-                        id: prefix + 'ping',
+                        id: 'ping',
                       },
                     },
                     {
                       quickReplyButton: {
                         displayText: 'Contact Owner',
-                        id: prefix + 'owner',
+                        id: 'owner',
                       },
                     },
                     {
                       quickReplyButton: {
                         displayText: 'Script',
-                        id: prefix + 'sc',
+                        id: 'sc',
                       },
                     },
                   ],
