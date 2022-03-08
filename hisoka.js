@@ -102,12 +102,13 @@ module.exports = das = async (das, m, chatUpdate, store) => {
     //   : prefa ?? global.prefix;
 
     const isCmd = body.startsWith(prefix);
-    const command = body
-      .replace(prefix, '')
-      .trim()
-      .split(/ +/)
-      .shift()
-      .toLowerCase();
+    const command = body.slice(1).trim().split(/ +/).shift().toLowerCase();
+    // const command = body
+    //   .replace(prefix, '')
+    //   .trim()
+    //   .split(/ +/)
+    //   .shift()
+    //   .toLowerCase();
     const args = body.trim().split(/ +/).slice(1);
     const pushname = m.pushName || 'No Name';
     const botNumber = await das.decodeJid(das.user.id);
