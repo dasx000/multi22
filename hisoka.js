@@ -70,7 +70,7 @@ let tebaklirik = (db.game.lirik = []);
 let tebaktebakan = (db.game.tebakan = []);
 let vote = (db.others.vote = []);
 
-var prefix = '.';
+// var prefix = '.';
 
 module.exports = das = async (das, m, chatUpdate, store) => {
   try {
@@ -95,11 +95,11 @@ module.exports = das = async (das, m, chatUpdate, store) => {
           m.text
         : '';
     var budy = typeof m.text == 'string' ? m.text : '';
-    // var prefix = prefa
-    //   ? /^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#$%^&.©^]/gi.test(body)
-    //     ? body.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#$%^&.©^]/gi)[0]
-    //     : ''
-    //   : prefa ?? global.prefix;
+    var prefix = prefa
+      ? /^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#$%^&.©^]/gi.test(body)
+        ? body.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#$%^&.©^]/gi)[0]
+        : ''
+      : prefa ?? global.prefix;
 
     const isCmd = body.startsWith(prefix);
     const command = body
