@@ -95,20 +95,8 @@ module.exports = das = async (das, m, chatUpdate, store) => {
           m.text
         : '';
     var budy = typeof m.text == 'string' ? m.text : '';
-    // var prefix = prefa
-    //   ? /^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#$%^&.©^]/gi.test(body)
-    //     ? body.match(/^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#$%^&.©^]/gi)[0]
-    //     : ''
-    //   : prefa ?? global.prefix;
-
     const isCmd = body.startsWith(prefix);
     const command = body.slice(1).trim().split(/ +/).shift().toLowerCase();
-    // const command = body
-    //   .replace(prefix, '')
-    //   .trim()
-    //   .split(/ +/)
-    //   .shift()
-    //   .toLowerCase();
     const args = body.trim().split(/ +/).slice(1);
     const pushname = m.pushName || 'No Name';
     const botNumber = await das.decodeJid(das.user.id);
@@ -120,6 +108,7 @@ module.exports = das = async (das, m, chatUpdate, store) => {
     const quoted = m.quoted ? m.quoted : m;
     const mime = (quoted.msg || quoted).mimetype || '';
     const isMedia = /image|video|sticker|audio/.test(mime);
+    const from = m.chat;
 
     // Group
     const groupMetadata = m.isGroup
@@ -168,7 +157,8 @@ module.exports = das = async (das, m, chatUpdate, store) => {
 
     // Push Message To Console && Auto Read
     if (m.message) {
-      das.sendReadReceipt(m.chat, m.sender, [m.key.id]);
+      das.sendPresenceUpdate('recording', m.chat);
+      // das.sendReadReceipt(m.chat, m.sender, [m.key.id]);
       console.log(
         chalk.black(chalk.bgWhite('[ PESAN ]')),
         chalk.black(chalk.bgGreen(new Date())),
