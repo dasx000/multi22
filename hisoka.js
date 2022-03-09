@@ -112,8 +112,8 @@ module.exports = das = async (das, m, chatUpdate, store) => {
     const sender = m.sender;
 
     // VALIDATION
-    const isOwner = sender == botNumber || sender == ownerNumber
-
+    const isOwner = sender == botNumber || sender == ownerNumber;
+    // END VALIDATION
 
     // Group
     const groupMetadata = m.isGroup
@@ -133,6 +133,13 @@ module.exports = das = async (das, m, chatUpdate, store) => {
         .map((v) => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net')
         .includes(m.sender) ||
       false;
+
+    // GET PROFILE PICTURE
+    try {
+      ppUrl = await das.profilePictureUrl(sender, 'image');
+    } catch {
+      ppUrl = 'https://telegra.ph/file/9386559a5b8bf727d530e.jpg';
+    }
 
     try {
       let isNumber = (x) => typeof x === 'number' && !isNaN(x);
@@ -4441,10 +4448,9 @@ ${cpus
           das.sendContact(m.chat, global.owner, m);
         }
         break;
-      case 'list':
+      case 'start':
       case 'menu':
       case 'help':
-      case '?':
         {
           anu = `┌──⭓ *Group Menu*
 │
@@ -4736,7 +4742,7 @@ ${cpus
 │
 └───────⭓`;
           let message = await prepareWAMessageMedia(
-            { image: fs.readFileSync('./lib/hisoka.jpg') },
+            { image: ppUrl },
             { upload: das.waUploadToServer }
           );
           const template = generateWAMessageFromContent(
