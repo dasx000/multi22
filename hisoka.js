@@ -109,6 +109,7 @@ module.exports = das = async (das, m, chatUpdate, store) => {
     const mime = (quoted.msg || quoted).mimetype || '';
     const isMedia = /image|video|sticker|audio/.test(mime);
     const from = m.chat;
+    const sender = m.sender;
 
     // Group
     const groupMetadata = m.isGroup
@@ -157,7 +158,7 @@ module.exports = das = async (das, m, chatUpdate, store) => {
 
     // Push Message To Console && Auto Read
     if (m.message) {
-      das.sendPresenceUpdate('recording', m.chat);
+      await das.sendPresenceUpdate('composing', from);
       // das.sendReadReceipt(m.chat, m.sender, [m.key.id]);
       console.log(
         chalk.black(chalk.bgWhite('[ PESAN ]')),
