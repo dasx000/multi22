@@ -4741,8 +4741,9 @@ ${cpus
 │⭔ ${prefix}setppbot [image]
 │
 └───────⭓`;
+          pp = await getBuffer(ppUrl);
           let message = await prepareWAMessageMedia(
-            { image: ppUrl },
+            { image: pp },
             { upload: das.waUploadToServer }
           );
           const template = generateWAMessageFromContent(
