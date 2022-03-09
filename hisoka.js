@@ -111,6 +111,10 @@ module.exports = das = async (das, m, chatUpdate, store) => {
     const from = m.chat;
     const sender = m.sender;
 
+    // VALIDATION
+    const isOwner = sender == botNumber || sender == ownerNumber
+
+
     // Group
     const groupMetadata = m.isGroup
       ? await das.groupMetadata(m.chat).catch((e) => {})
@@ -158,7 +162,7 @@ module.exports = das = async (das, m, chatUpdate, store) => {
 
     // Push Message To Console && Auto Read
     if (m.message) {
-      await das.sendPresenceUpdate('composing', from);
+      await das.sendPresenceUpdate('unavailable', from);
       // das.sendReadReceipt(m.chat, m.sender, [m.key.id]);
       console.log(
         chalk.black(chalk.bgWhite('[ PESAN ]')),
