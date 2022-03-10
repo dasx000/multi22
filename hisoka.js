@@ -134,6 +134,20 @@ module.exports = das = async (das, m, chatUpdate, store) => {
         .includes(m.sender) ||
       false;
 
+    //////////////////  Function  Message  ///////////////////////////////////////
+
+    const reply = (teks) => {
+      das.sendMessage(from, teks, text, {
+        quoted: mek,
+        sendEphemeral: true,
+        contextInfo: {
+          forwardingScore: 210,
+          isForwarded: true,
+        },
+      });
+    };
+    ////////////////// End Function  Message  ///////////////////////////////////////
+
     // GET PROFILE PICTURE
     try {
       ppUrl = await das.profilePictureUrl(sender, 'image');
