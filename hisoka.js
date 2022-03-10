@@ -137,12 +137,7 @@ module.exports = das = async (das, m, chatUpdate, store) => {
     //////////////////  Function  Message  ///////////////////////////////////////
 
     const reply = (teks) => {
-      m.reply(teks, from, {
-        contextInfo: {
-          forwardingScore: 210,
-          isForwarded: true,
-        },
-      });
+      m.reply(teks);
     };
     ////////////////// End Function  Message  ///////////////////////////////////////
 
